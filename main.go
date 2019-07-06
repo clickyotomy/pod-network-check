@@ -41,7 +41,7 @@ func main() {
 		// For `dogstatsd'.
 		ddog *statsd.Client
 
-		// For tracking go-routines.
+		// For tracking `goroutines'.
 		ch = make(chan status)
 		gc int
 
@@ -101,13 +101,15 @@ func main() {
 		log.Panic(err.Error())
 	}
 
+	// Setup a ticker for the main loop.
 	tkr = time.NewTicker(time.Second * time.Duration(*interval))
 
+	// Create a new client for `dogstatsd'.
 	if ddog, err = statsd.New(*ddogAddr); err != nil {
 		log.Panic(err)
 	}
 
-	// Loop for every interval.
+	// This is the main loop. Runs for every `interval'.
 	for {
 		select {
 		case <-tkr.C:
@@ -143,6 +145,8 @@ func main() {
 									*protocol,
 									ch,
 								)
+
+								// Increment the `goroutine' counter.
 								gc++
 							}
 						}
@@ -150,6 +154,7 @@ func main() {
 				}
 			}
 
+			// Wait for all the `goroutines' to finish.
 			for gc > 0 {
 				if c, ok := <-ch; ok {
 					chk = append(chk, c)
