@@ -23,3 +23,6 @@ DEFAULTS
 	-timeout     5
 	-protocol    tcp
 	-debug       false
+
+DOCKER
+	clickyotomy/pod-network-check:latest
