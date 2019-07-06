@@ -21,5 +21,6 @@ Defaults:
 	-interval    30
 	-timeout     5
 	-protocol    tcp
+    -debug       false
 */
 package main
