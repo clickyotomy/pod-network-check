@@ -17,10 +17,10 @@ Arguments:
 	-debug       Print debug output.
 
 Defaults:
-	-name        pod-network-check
-	-interval    30
-	-timeout     5
-	-protocol    tcp
+    -name        pod-network-check
+    -interval    30
+    -timeout     5
+    -protocol    tcp
     -debug       false
 */
 package main
