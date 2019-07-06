@@ -26,3 +26,6 @@ DEFAULTS
 
 DOCKER
 	clickyotomy/pod-network-check:latest
+
+DOCUMENTATION
+	https://godoc.org/github.com/clickyotomy/pod-network-check
