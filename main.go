@@ -138,7 +138,7 @@ func main() {
 								go alive(
 									podSock{
 										pod.ObjectMeta.Name,
-										node.Address,
+										strings.Split(node.Address, ":")[1],
 										node.Port,
 										time.Second * time.Duration(*timeout),
 									},
