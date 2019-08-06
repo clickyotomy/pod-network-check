@@ -1,5 +1,5 @@
 /*
-Command network-check sends pod connection failure events to DataDog.
+Command pod-network-check sends pod connection failure events to DataDog.
 
 Usage:
     pod-network-check -name {C} -namespace {N} -ports {X,Y,Z...}
