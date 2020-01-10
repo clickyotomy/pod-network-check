@@ -31,7 +31,7 @@ LDFLAGS_STR := -ldflags '-w -s -linkmode internal -extldflags "${LDFLAGS_EXT}"'
 
 # For external tags (`go' and `docker').
 TAG ?= dev
-GITHUB ?= ""
+GITHUB ?= "clickyotomy"
 
 # Build tags to use `netgo' and `osusergo', because we're not using `cgo'
 # or any "libc-backed" libraries for compiling.
@@ -95,7 +95,7 @@ dev-linux: dev
 
 # For local docker builds.
 dev-docker:
-	@docker build ${DOCKER_FLAGS} --tag "${GITHUB}${CMD}:${TAG}" .
+	@docker build ${DOCKER_FLAGS} --tag "${GITHUB}/${CMD}:${TAG}" .
 
 # Clean-up build artifacts (common).
 clean:
