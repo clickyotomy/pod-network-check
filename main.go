@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -49,7 +48,6 @@ func main() {
 		err error
 		tmp int
 		dbg *bool
-		atn annotation
 		chk []status
 		tkr *time.Ticker
 	)
@@ -124,31 +122,21 @@ func main() {
 			}
 
 			for _, pod := range pods.Items {
-				if pod.ObjectMeta.Annotations != nil {
-					for _, value := range pod.ObjectMeta.Annotations {
-						err = json.Unmarshal([]byte(value), &atn)
-						if err != nil {
-							log.Printf("json: %s", err)
-							continue
-						}
-
-						// Run checks.
-						for _, node := range atn.Nodes {
-							if contains(node.Port, ports) {
-								go alive(
-									podSock{
-										pod.ObjectMeta.Name,
-										strings.Split(node.Address, ":")[1],
-										node.Port,
-										time.Second * time.Duration(*timeout),
-									},
-									*protocol,
-									ch,
-								)
-
-								// Increment the `goroutine' counter.
-								gc++
-							}
+				for _, container := range pod.Spec.Containers {
+					for _, port := range container.Ports {
+						if contains(uint16(port.ContainerPort), ports) && strings.ToLower(string(port.Protocol)) == strings.ToLower(*protocol) {
+							go alive(
+								podSock{
+									fmt.Sprintf("%s[%s]", pod.ObjectMeta.Name, container.Name),
+									pod.Status.PodIP,
+									uint16(port.ContainerPort),
+									time.Second *
+										time.Duration(*timeout),
+								},
+								*protocol,
+								ch,
+							)
+							gc++
 						}
 					}
 				}
