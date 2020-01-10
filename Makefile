@@ -69,7 +69,7 @@ tidy:
 
 # Temporarily switch off modules because it's not a package dependency.
 lint:
-	@GO111MODULE="off" go get -u "golang.org/x/lint/golint"
+	go get -u "golang.org/x/lint/golint"
 	@golint ./...
 
 fmt:
@@ -86,7 +86,7 @@ build:
 	@go build ${GO_FLAGS_DEV} -o ${DEV_BIN_DIR}/${CMD} ./...
 
 # Develpment builds.
-dev: mod tidy chk lint fmt vet fix build
+dev: mod tidy chk lint fmt fix build vet
 
 # For local development (linux binary).
 dev-linux: export GOOS=linux
