@@ -67,11 +67,6 @@ chk:
 tidy:
 	@go mod tidy
 
-# Temporarily switch off modules because it's not a package dependency.
-lint:
-	go get -u "golang.org/x/lint/golint"
-	@golint ./...
-
 fmt:
 	@go fmt ./...
 
@@ -86,7 +81,7 @@ build:
 	@go build ${GO_FLAGS_DEV} -o ${DEV_BIN_DIR}/${CMD} ./...
 
 # Develpment builds.
-dev: mod tidy chk lint fmt fix build vet
+dev: mod tidy chk fmt fix build vet
 
 # For local development (linux binary).
 dev-linux: export GOOS=linux
@@ -106,12 +101,12 @@ dev-clean: clean
 	@rm ${DEV_BIN_DIR}/*
 
 # Production builds.
-ship: mod chk lint vet build
+ship: mod chk vet build
 	@go build ${GO_FLAGS_SHIP} -o ${SHIP_BIN_DIR}/${CMD} ./...
 
 # Clean-up production binary.
 ship-clean: clean
 	@rm ${SHIP_BIN_DIR}/*
 
-.PHONY: dev-init dev-dep mod tidy chk lint fmt vet fix build dev \
+.PHONY: dev-init dev-dep mod tidy chk fmt vet fix build dev \
         dev-linux dev-docker clean dev-clean ship ship-clean

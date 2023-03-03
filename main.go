@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -115,6 +116,7 @@ func main() {
 
 			// Query for the pods.
 			pods, err = cset.CoreV1().Pods(*namespace).List(
+				context.TODO(),
 				metav1.ListOptions{},
 			)
 			if err != nil {
